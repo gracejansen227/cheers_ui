@@ -1,1 +1,2 @@
-export * from './find-bar';
+export * from './find-establishment-types';
+export * from './find-bars';
