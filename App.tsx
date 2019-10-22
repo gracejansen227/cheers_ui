@@ -5,20 +5,67 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 // import { goToBarSearch } from './src/navigation'
 // import { registerScreens } from './src/screens';
-import HomeScreen from 'src/screens/HomeScreen';
-import BarDetails from 'src/screens/BarDetails';
-import BarSearch from 'src/screens/BarSearch';
+import HomeScreen from '../cheers_ui/src/screens/home-screen';
+import BarDetails from '../cheers_ui/src/screens/bar-details';
+import BarSearch from '../cheers_ui/src/screens/bar-search';
 
-Navigation.registerComponent('rncreate.HomeScreen', () => HomeScreen);
-Navigation.registerComponent('rncreate.BarDetails', () => BarDetails);
-Navigation.registerComponent('rncreate.BarSearch', () => BarSearch);
+Navigation.registerComponent('navigation.HomeScreen', () => HomeScreen);
+Navigation.registerComponent('navigation.BarDetails', () => BarDetails);
+Navigation.registerComponent('navigation.BarSearch', () => BarSearch);
 
-Navigation.startSingleScreenApp({
-	screen: {
-		screen: 'rncreate.HomeScreen',
-		title: 'Home'
+
+export default class App extends Component {
+	constructor(props){
+    	this.startApp();
+  	}
+	
+	startApp(){
+		Navigation.events().registerAppLaunchedListener(() => {
+			Navigation.setRoot({
+				root: {
+					bottomTabs: {
+						children: [
+							{
+								stack: {
+									children: [
+										{
+											component: {
+												name: 'navigation.BarSearch',
+												options: {
+													bottomTab: {
+														fontSize: 12,
+														text: 'Bar Search',
+													}
+												}
+											},
+										}
+									]
+								}
+							},
+							{
+								stack: {
+									children: [
+										{
+											component: {
+												name: 'navigation.BarDetails',
+												options: {
+													bottomTab: {
+														fontSize: 12,
+														text: 'Bar Details'
+													}
+												}
+											},
+										}
+									]
+								}
+							},
+						],
+					},
+				}
+			});
+		});
 	}
-});
+}
 
 // registerScreens(store, Provider);
 

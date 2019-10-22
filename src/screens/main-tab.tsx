@@ -4,12 +4,12 @@ const startTabs = () => {
     Navigation.startTabBasedApp({
         tabs: [
             {
-                screen: 'rncreate.BarDetails',
+                screen: 'BarDetails',
                 label: 'BarDetails',
                 title: 'Bar Details'
             },
             {
-                screen: 'rncreate.BarSearch',
+                screen: 'BarSearch',
                 label: 'BarSearch',
                 title: 'Bar Search'
             },

@@ -12,7 +12,7 @@ export default class HomeScreen extends Component {
         return (
             <View>
                 <Text> HOme Screen </Text>
-                <Button title="Tab nav" onPRess = { this.onButtonPress } />
+                <Button title="Tab nav" onPress = { this.onButtonPress } />
             </View>
         )
     }
