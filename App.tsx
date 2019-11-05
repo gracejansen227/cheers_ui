@@ -1,166 +1,82 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-// import { getEstablishmentTypes } from '../src/api/routes/find-establishment-types';
-// import { getAllBars } from './src/api/routes/find-bars';
+import { Font, AppLoading } from 'expo';
+import { getEstablishmentTypes } from '../src/api/routes/find-establishment-types';
+import { getAllWineBars } from './src/api/routes/find-bars';
 import { Navigation } from 'react-native-navigation';
+import { Card, Screen, Tile, Title, Subtitle, ListView, NavigationBar } from '@shoutem/ui';
 // import { goToBarSearch } from './src/navigation'
 // import { registerScreens } from './src/screens';
-import HomeScreen from '../cheers_ui/src/screens/home-screen';
-import BarDetails from '../cheers_ui/src/screens/bar-details';
-import BarSearch from '../cheers_ui/src/screens/bar-search';
-
-Navigation.registerComponent('navigation.HomeScreen', () => HomeScreen);
-Navigation.registerComponent('navigation.BarDetails', () => BarDetails);
-Navigation.registerComponent('navigation.BarSearch', () => BarSearch);
-
+// import HomeScreen from '../cheers_ui/src/screens/home-screen';
+// import BarDetails from '../cheers_ui/src/screens/bar-details';
+// import BarSearch from '../cheers_ui/src/screens/bar-search';
 
 export default class App extends Component {
-	constructor(props){
-    	this.startApp();
-  	}
-	
-	startApp(){
-		Navigation.events().registerAppLaunchedListener(() => {
-			Navigation.setRoot({
-				root: {
-					bottomTabs: {
-						children: [
-							{
-								stack: {
-									children: [
-										{
-											component: {
-												name: 'navigation.BarSearch',
-												options: {
-													bottomTab: {
-														fontSize: 12,
-														text: 'Bar Search',
-													}
-												}
-											},
-										}
-									]
-								}
-							},
-							{
-								stack: {
-									children: [
-										{
-											component: {
-												name: 'navigation.BarDetails',
-												options: {
-													bottomTab: {
-														fontSize: 12,
-														text: 'Bar Details'
-													}
-												}
-											},
-										}
-									]
-								}
-							},
-						],
-					},
-				}
-			});
-		});
-	}
-}
 
-// registerScreens(store, Provider);
+  constructor(props){
+    super(props);
 
-// export default class App extends Component {
-//   constructor(props){
-//     this.startApp();
-//   }
+	this.renderRow = this.renderRow.bind(this);
+    this.state = { bars: [], fontsAreLoaded: false };
+  }
 
-//   startApp(){
-//     Navigation.startTabBasedApp({
-//       tabs: [
-//   			{
-// 				label: 'BarSearch',
-// 				screen: 'BarSearch',
-// 				// icon: iconsMap['ios-film-outline'],
-// 				// selectedIcon: iconsMap['ios-film'],
-// 				title: 'BarSearch',
-// 				navigatorStyle,
-// 				navigatorButtons: {
-// 					rightButtons: [
-// 						{
-// 							title: 'Search',
-// 							id: 'search',
-// 							icon: iconsMap['ios-search']
-// 						}
-// 					]
-// 				}
-// 			},
-// 			{
-// 				label: 'BarDetails',
-// 				screen: 'BarDetails',
-// 				// icon: iconsMap['ios-desktop-outline'],
-// 				// selectedIcon: iconsMap['ios-desktop'],
-// 				title: 'BarDetails',
-// 				navigatorStyle
-// 			}
-//       ],
-//       tabsStyle: {
-// 			tabBarButtonColor: 'white',
-// 			tabBarSelectedButtonColor: 'white',
-// 			tabBarBackgroundColor: 'black'
-// 		}
-//     })
-//   }
-// }
-
-
-
-// export default class App extends Component {
-
-//   constructor(props){
-//     super(props);
-//     this.state = { bars: []};
-//   }
-//   async getEstablishments() {
-//     // const response = await getEstablishments;
-//     // console.log('response', response);
-//    let response = await getEstablishmentTypes();
-//    const barsData = response.data.establishments.map(record => {
-//        return record.establishment.name;
-//      });
-//      this.setState({ bars: barsData });
-//   }
-
-//   async getResult() {
-//    let response = await getAllBars();
-//    const barsData = response.data.restaurants.map(record => {
-//        return record.restaurant.id;
-//      });
-//      this.setState({ bars: barsData });
-//   }
+  async getResult() {
+   let response = await getAllWineBars();
+   const barsData = response.data.restaurants.map(record => {
+       return record.restaurant;
+     });
+     this.setState({ bars: barsData, fontsAreLoaded: true });
+  }
   
-//   componentWillMount(){
-//     this.getResult();
-//   }
-//   render() {
-//     console.log('THIS IS BARS YO',this.state.bars);
-//     return (
-//       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//       {this.state.bars.map(bar => (
-//         <Text>Hello, {bar}!</Text>)
-//       )}
-//       </View>
-//     );
-//   }
-// }
+  componentWillMount = async() => {
+	await Font.loadAsync({
+      'Rubik-Black': require('./node_modules/@shoutem/ui/fonts/Rubik-Black.ttf'),
+      'Rubik-BlackItalic': require('./node_modules/@shoutem/ui/fonts/Rubik-BlackItalic.ttf'),
+      'Rubik-Bold': require('./node_modules/@shoutem/ui/fonts/Rubik-Bold.ttf'),
+      'Rubik-BoldItalic': require('./node_modules/@shoutem/ui/fonts/Rubik-BoldItalic.ttf'),
+      'Rubik-Italic': require('./node_modules/@shoutem/ui/fonts/Rubik-Italic.ttf'),
+      'Rubik-Light': require('./node_modules/@shoutem/ui/fonts/Rubik-Light.ttf'),
+      'Rubik-LightItalic': require('./node_modules/@shoutem/ui/fonts/Rubik-LightItalic.ttf'),
+      'Rubik-Medium': require('./node_modules/@shoutem/ui/fonts/Rubik-Medium.ttf'),
+      'Rubik-MediumItalic': require('./node_modules/@shoutem/ui/fonts/Rubik-MediumItalic.ttf'),
+      'Rubik-Regular': require('./node_modules/@shoutem/ui/fonts/Rubik-Regular.ttf'),
+      'rubicon-icon-font': require('./node_modules/@shoutem/ui/fonts/rubicon-icon-font.ttf'),
+    });
+    this.getResult();
+  }
 
+	renderRow(bar){
+		if (!bar){
+			return null;
+		}
+		if (!this.state.fontsAreLoaded){
+			return <AppLoading />;
+		}
+		return (
+			<View>
+				<Tile>
+					<Title styleName="md-gutter-bottom">{bar.name}</Title>
+					<Subtitle styleName="sm-gutter-horizontal">{bar.location.address}</Subtitle>
+				</Tile>
+				<Divider styleName="line" />
+			</View>
+		)
+	}
 
+	render() {
+		const { bars } = this.state.bars;
+		return (
+			<Screen>
+			<NavigationBar
+				title="Bars"
+				styleName="inline"
+			/>
+			 <ListView
+        		data={bars}
+        		renderRow={this.renderRow}
+      		/>
+			</Screen>
+		);
+	}
 
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
+}
