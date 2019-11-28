@@ -2,7 +2,7 @@
 import axios from 'axios';
 const userKey = `d2838aff8345fac53296697d57240bdf`;
 
-export function getAllBars() {
+export function getAllWineBars() {
     return axios({
         method: 'get',
         url: 'https://developers.zomato.com/api/v2.1/search',
