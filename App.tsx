@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { getEstablishmentTypes } from '../src/api/routes/find-establishment-types';
 import { getAllWineBars } from './src/api/routes/find-bars';
-import { Navigation } from 'react-native-navigation';
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { Navigation } from 'react-navigation';
+import { Card, ListItem, Button, Icon, Header } from 'react-native-elements'
 // import { goToBarSearch } from './src/navigation'
 // import { registerScreens } from './src/screens';
 // import HomeScreen from '../cheers_ui/src/screens/home-screen';
@@ -29,10 +29,16 @@ export default class App extends Component {
     this.getResult();
   }
   render() {
-    console.log('THIS IS BARS YO',this.state.bars);
+    const { onBarPress } = this.props;
     return (
 	<ScrollView>
 	<View>
+		<Header
+			containerStyle={{ backgroundColor: '#1ac0c6'}}
+			leftComponent={{ icon: 'menu', color: '#fb7756'}}
+			centerComponent={{ text: 'cheers', style: { color: '#fff' } }}
+  			rightComponent={{ icon: 'home', color: '#fb7756' }}
+		/>
 		<Card containerStyle={{padding: 0}} >
 			{
 			this.state.bars.map((bar) => {
@@ -42,12 +48,9 @@ export default class App extends Component {
 				key={bar.id}
 				title={bar.name}
 				subtitle={bar.location.address}
+				bottomDivider
+				onPress={() => onBarPress(bar)}
 				/>
-				<Button
-				small
-				raised
-				rounded
-				>Hello</Button>
 				</View>
 			);
 			})
@@ -65,7 +68,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fdfa66',
     alignItems: 'center',
     justifyContent: 'center',
   },

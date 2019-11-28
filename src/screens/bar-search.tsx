@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { getEstablishmentTypes } from '../api/routes/find-establishment-types.ts';
 import { getAllBars } from '../api/routes/find-bars.ts';
-import { Navigation } from 'react-native-navigation';
+import { Navigation } from 'react-navigation';
 
 export default class BarSearch extends Component {
 
